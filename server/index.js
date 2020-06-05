@@ -8,12 +8,22 @@ const express = require('express'),
 
 app.use(express.json());
 
+app.use(
+	session({
+		resave: false,
+		saveUninitialized: true,
+		cookie: { maxAge: 1000 * 60 * 60 * 24 }, // 1 day
+		secret: SESSION_SECRET,
+	})
+);
+
 //Auth Endpoints
 app.post('/auth/register', ctrl.register);
 app.post('/auth/login', ctrl.login);
 
 //Posts Endpoints
 app.get('/api/posts/:userId', ctrl.getPosts);
+app.get('/api/post/:postId', ctrl.getPost);
 
 massive({
 	connectionString: CONNECTION_STRING,
