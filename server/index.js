@@ -12,6 +12,9 @@ app.use(express.json());
 app.post('/auth/register', ctrl.register);
 app.post('/auth/login', ctrl.login);
 
+//Posts Endpoints
+app.get('/api/posts/:userId', ctrl.getPosts);
+
 massive({
 	connectionString: CONNECTION_STRING,
 	ssl: { rejectUnauthorized: false },

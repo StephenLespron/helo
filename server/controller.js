@@ -47,4 +47,24 @@ module.exports = {
 			}
 		}
 	},
+	logout: async (req, res) => {},
+	getPosts: async (req, res) => {
+		const db = req.app.get('db'),
+			{ userId } = req.params,
+			{ includeMyPosts, search } = req.query;
+
+		const criteria = `%${search}%`;
+
+		if (includeMyPosts) {
+			await db
+				.get_posts([0, criteria])
+				.then((posts) => res.status(200).send(posts))
+				.catch((err) => res.status(500).send(console.log(err)));
+		} else {
+			await db
+				.get_posts([userId, criteria])
+				.then((posts) => res.status(200).send(posts))
+				.catch((err) => res.status(500).send(console.log(err)));
+		}
+	},
 };
