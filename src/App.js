@@ -5,13 +5,10 @@ import './App.css';
 
 function App(props) {
 	return (
-		console.log(props),
-		(
-			<div className='App'>
-				<Nav />
-				{routes}
-			</div>
-		)
+		<div className='App'>
+			<Nav />
+			{routes}
+		</div>
 	);
 }
 

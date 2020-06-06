@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login } from '../../ducks/reducer';
 
@@ -20,8 +21,8 @@ class Auth extends Component {
 		const { username, password } = this.state;
 		axios
 			.post('auth/register', { username, password })
-			.then((res) => console.log(res.data))
-			.catch((err) => alert(err.response.request.response));
+			.then(() => this.props.login(username, password))
+			.catch((err) => alert('Unable to register'));
 	};
 
 	login = (ev) => {
@@ -30,11 +31,11 @@ class Auth extends Component {
 		axios
 			.post('auth/login', { username, password })
 			.then((res) => {
-				const { id, username, profile_pic } = res.data[0];
-				this.props.login(id, username, profile_pic);
+				const { username, profile_pic } = res.data[0];
+				this.props.login(username, profile_pic);
 				this.props.history.push('/dashboard');
 			})
-			.catch((err) => alert(err.response.request.response));
+			.catch((err) => alert('Login unsuccessful'));
 	};
 
 	render() {
@@ -57,11 +58,13 @@ class Auth extends Component {
 						onChange={(ev) => this.handleChange(ev)}
 					/>
 					<input type='submit' value='Login' />
-					<input
-						type='button'
-						value='Register'
-						onClick={() => this.register()}
-					/>
+					<Link to='/dashboard'>
+						<input
+							type='button'
+							value='Register'
+							onClick={() => this.register()}
+						/>
+					</Link>
 				</form>
 			</div>
 		);

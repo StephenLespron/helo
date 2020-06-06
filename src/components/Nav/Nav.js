@@ -1,16 +1,33 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { logout } from '../../ducks/reducer';
+import { logout, getAccount } from '../../ducks/reducer';
 import { connect } from 'react-redux';
 import './Nav.css';
 
 class Nav extends Component {
+	componentDidMount() {
+		this.props.getAccount();
+	}
+
+	logout() {
+		axios
+			.post('auth/logout')
+			.then(() => {
+				this.props.logout();
+			})
+			.catch((err) => console.log(err));
+	}
+
 	render() {
 		return (
 			<div id='Nav'>
 				{this.props.isLoggedIn ? (
 					<div>
-						<img alt='profile pic' src={this.props.profilePic} />
+						<img
+							alt='profile pic'
+							src={`https://robohash.org/${this.props.username}.png`}
+						/>
 						<h3>{this.props.username}</h3>
 						<Link to='/dashboard'>
 							<button>Home</button>
@@ -19,7 +36,7 @@ class Nav extends Component {
 							<button>New Post</button>
 						</Link>
 						<Link to='/'>
-							<button onClick={() => this.props.logout()}>Logout</button>
+							<button onClick={() => this.logout()}>Logout</button>
 						</Link>
 					</div>
 				) : (
@@ -32,4 +49,4 @@ class Nav extends Component {
 
 const mapStateToProps = (state) => state;
 
-export default connect(mapStateToProps, { logout })(Nav);
+export default connect(mapStateToProps, { logout, getAccount })(Nav);

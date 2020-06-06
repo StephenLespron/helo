@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 module.exports = {
 	register: async (req, res) => {
 		const db = req.app.get('db'),
-			{ username, password, profilePic } = req.body;
+			{ username, password } = req.body;
 
 		const existingAccount = await db.check_account(username);
 
@@ -15,13 +15,13 @@ module.exports = {
 		//create new account
 		const salt = bcrypt.genSaltSync(10),
 			hash = bcrypt.hashSync(password, salt),
-			newAccount = await db.register([username, hash, profilePic]);
+			newAccount = await db.register([username, hash]);
 
-		// req.session.user = {
-		// 	accountId: newAccount[0].id,
-		// 	username: newAccount[0].username,
-		// 	profilePic: newAccount[0].profile_pic,
-		// };
+		req.session.account = {
+			accountId: newAccount[0].id,
+			username: newAccount[0].username,
+			profilePic: newAccount[0].profile_pic,
+		};
 
 		res.status(200).send(newAccount);
 	},
@@ -36,21 +36,31 @@ module.exports = {
 		} else {
 			const authenticated = bcrypt.compareSync(password, account[0].password);
 			if (authenticated) {
-				// req.session.user = {
-				// 	accountId: account[0].id,
-				// 	username: account[0].username,
-				// 	profilePic: account[0].profile_pic,
-				// };
+				req.session.account = {
+					accountId: account[0].id,
+					username: account[0].username,
+					profilePic: account[0].profile_pic,
+				};
 				res.status(200).send(account);
 			} else {
 				res.status(403).send('Password incorrect');
 			}
 		}
 	},
-	logout: async (req, res) => {},
+	logout: async (req, res) => {
+		req.session.destroy();
+		res.sendStatus(200);
+	},
+	getAccount: async (req, res) => {
+		if (req.session.account) {
+			res.status(200).send(req.session.account);
+		} else {
+			res.sendStatus(404);
+		}
+	},
 	getPosts: (req, res) => {
 		const db = req.app.get('db'),
-			{ userId } = req.params,
+			{ accountId } = req.session.account,
 			{ includeMyPosts, search } = req.query;
 
 		const criteria = `%${search}%`;
@@ -60,34 +70,39 @@ module.exports = {
 				.then((posts) => res.status(200).send(posts))
 				.catch((err) => res.status(500).send(console.log(err)));
 		} else {
-			db.get_posts([userId, criteria])
+			db.get_posts([accountId, criteria])
 				.then((posts) => res.status(200).send(posts))
 				.catch((err) => res.status(500).send(console.log(err)));
 		}
 	},
 	getPost: (req, res) => {
 		const db = req.app.get('db'),
-			{ postId } = req.params;
+			{ postId } = req.params,
+			{ accountId } = req.session.account;
 
 		db.get_post(postId)
-			.then((post) => res.status(200).send(post))
+			.then((post) => {
+				post[0].accountId = +accountId;
+				// const details = [...post, accountId];
+				res.status(200).send(post);
+			})
 			.catch((err) => res.status(500).send(console.log(err)));
 	},
 	newPost: (req, res) => {
 		const db = req.app.get('db'),
 			{ title, img, content } = req.body,
-			{ userId } = req.params;
+			{ accountId } = req.session.account;
 
-		db.create_post([title, img, content, +userId])
+		db.create_post([title, img, content, +accountId])
 			.then(() => res.sendStatus(200))
 			.catch((err) => res.status(418).send(console.log(err)));
 	},
 	deletePost: (req, res) => {
 		const db = req.app.get('db'),
-			{ userId } = req.params;
+			{ postId } = req.params;
 
-		db.delete_post(userId)
-			.then(() => res.sendStatus(200))
-			.catch((err) => console.log(err));
+		db.delete_post([+postId])
+			.then(() => console.log(postId, +postId))
+			.catch((err) => console.log(err, postId, +postId));
 	},
 };

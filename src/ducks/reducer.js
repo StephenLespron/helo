@@ -2,19 +2,18 @@ import axios from 'axios';
 
 const initialState = {
 	username: '',
-	id: null,
 	profilePic: '',
 	isLoggedIn: false,
 };
 
 const LOGIN_ACCOUNT = 'LOGIN_ACCOUNT',
 	LOGOUT_ACCOUNT = 'LOGOUT_ACCOUNT',
-	GET_USER = 'GET_USER';
+	GET_ACCOUNT = 'GET_ACCOUNT';
 
-export function login(id, username, profilePic) {
+export function login(username, profilePic) {
 	return {
 		type: LOGIN_ACCOUNT,
-		payload: { id, username, profilePic },
+		payload: { username, profilePic },
 	};
 }
 
@@ -25,19 +24,29 @@ export function logout() {
 	};
 }
 
-// export function getUser() {
-// 	const user = axios.get('auth/user');
+export function getAccount() {
+	let account;
+	axios
+		.get('auth/me')
+		.then((res) => (account = res.data))
+		.catch((err) => console.log('Not logged in'));
 
-// 	return { type: GET_USER, payload: user };
-// }
+	return { type: GET_ACCOUNT, payload: account };
+}
 
 export default function (state = initialState, action) {
 	switch (action.type) {
 		case LOGIN_ACCOUNT:
 			return { ...state, ...action.payload, isLoggedIn: true };
 		case LOGOUT_ACCOUNT:
-			return { ...action.payload, isLoggedIn: false };
-		default:
+			return { ...state, ...action.payload };
+		case GET_ACCOUNT + '_PENDING':
 			return state;
+		case GET_ACCOUNT + '_FULFILLED':
+			return { ...state, ...action.payload, isLoggedIn: true };
+		case GET_ACCOUNT + '_REJECTED':
+			return { initialState };
+		default:
+			return initialState;
 	}
 }

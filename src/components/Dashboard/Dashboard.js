@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 import axios from 'axios';
 
 class Dashboard extends Component {
@@ -18,7 +17,7 @@ class Dashboard extends Component {
 	getPosts() {
 		axios
 			.get(
-				`api/posts/${this.props.id}?includeMyPosts=${this.state.includeMyPosts}&search=${this.state.search}`
+				`api/posts/?includeMyPosts=${this.state.includeMyPosts}&search=${this.state.search}`
 			)
 			.then((res) =>
 				this.setState({
@@ -54,6 +53,13 @@ class Dashboard extends Component {
 		this.getPosts();
 	}
 
+	deletePost(id) {
+		axios
+			.delete(`api/post/${id}`)
+			.then(() => console.log('post deleted'))
+			.catch((err) => console.log(err));
+	}
+
 	render() {
 		const posts = this.state.posts.map((elem) => {
 			return (
@@ -66,7 +72,10 @@ class Dashboard extends Component {
 						<h3>{elem.title}</h3>
 					</Link>
 					<h4>{elem.username}</h4>
-					<img alt='profile pic' src={elem.profile_pic} />
+					<img
+						alt='profile pic'
+						src={`https://robohash.org/${elem.username}.png`}
+					/>
 				</div>
 			);
 		});
@@ -96,6 +105,4 @@ class Dashboard extends Component {
 	}
 }
 
-const mapStateToProps = (state) => state;
-
-export default connect(mapStateToProps)(Dashboard);
+export default Dashboard;

@@ -12,6 +12,7 @@ class Post extends Component {
 			username: '',
 			profilePic: '',
 			authorId: null,
+			sessionId: null,
 		};
 	}
 
@@ -26,6 +27,7 @@ class Post extends Component {
 					username,
 					profile_pic,
 					author_id,
+					accountId,
 				} = res.data[0];
 				this.setState({
 					title: title,
@@ -34,6 +36,7 @@ class Post extends Component {
 					username: username,
 					profilePic: profile_pic,
 					authorId: author_id,
+					sessionId: accountId,
 				});
 			})
 			.catch((err) => console.log(err));
@@ -44,8 +47,19 @@ class Post extends Component {
 	}
 	render() {
 		const del = () => {
-			if (+this.props.id === +this.state.authorId) {
-				return <input type='button' value='Delete' />;
+			if (+this.state.sessionId === +this.state.authorId) {
+				return (
+					<input
+						type='button'
+						value='Delete'
+						onClick={() => {
+							this.props.location.state.deletePost(
+								+this.props.match.params.postId
+							);
+							this.props.history.push('/dashboard');
+						}}
+					/>
+				);
 			} else {
 				return <div></div>;
 			}
@@ -56,7 +70,10 @@ class Post extends Component {
 		return (
 			<div>
 				<div>
-					<img alt='profile pic' src={profilePic} />
+					<img
+						alt='profile pic'
+						src={`https://robohash.org/${this.props.username}.png`}
+					/>
 					<h3>{username}</h3>
 				</div>
 				<div>

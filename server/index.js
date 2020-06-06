@@ -20,11 +20,13 @@ app.use(
 //Auth Endpoints
 app.post('/auth/register', ctrl.register);
 app.post('/auth/login', ctrl.login);
+app.get('/auth/me', ctrl.getAccount);
+app.post('/auth/logout', ctrl.logout);
 
 //Posts Endpoints
-app.get('/api/posts/:userId', ctrl.getPosts);
+app.get('/api/posts/', ctrl.getPosts);
 app.get('/api/post/:postId', ctrl.getPost);
-app.post('/api/post/:userId', ctrl.newPost);
+app.post('/api/post/', ctrl.newPost);
 app.delete('/api/post/:postId', ctrl.deletePost);
 
 massive({
