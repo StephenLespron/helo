@@ -60,7 +60,7 @@ class Auth extends Component {
 					<input
 						type='button'
 						value='Register'
-						onClick={(ev) => this.register(ev)}
+						onClick={() => this.register()}
 					/>
 				</form>
 			</div>

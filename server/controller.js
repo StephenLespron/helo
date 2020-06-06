@@ -73,4 +73,21 @@ module.exports = {
 			.then((post) => res.status(200).send(post))
 			.catch((err) => res.status(500).send(console.log(err)));
 	},
+	newPost: (req, res) => {
+		const db = req.app.get('db'),
+			{ title, img, content } = req.body,
+			{ userId } = req.params;
+
+		db.create_post([title, img, content, +userId])
+			.then(() => res.sendStatus(200))
+			.catch((err) => res.status(418).send(console.log(err)));
+	},
+	deletePost: (req, res) => {
+		const db = req.app.get('db'),
+			{ userId } = req.params;
+
+		db.delete_post(userId)
+			.then(() => res.sendStatus(200))
+			.catch((err) => console.log(err));
+	},
 };

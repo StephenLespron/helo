@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 class Post extends Component {
 	constructor() {
@@ -10,6 +11,7 @@ class Post extends Component {
 			content: '',
 			username: '',
 			profilePic: '',
+			authorId: null,
 		};
 	}
 
@@ -17,13 +19,21 @@ class Post extends Component {
 		axios
 			.get(`api/post/${this.props.match.params.postId}`)
 			.then((res) => {
-				const { title, img, content, username, profile_pic } = res.data[0];
+				const {
+					title,
+					img,
+					content,
+					username,
+					profile_pic,
+					author_id,
+				} = res.data[0];
 				this.setState({
 					title: title,
 					img: img,
 					content: content,
 					username: username,
 					profilePic: profile_pic,
+					authorId: author_id,
 				});
 			})
 			.catch((err) => console.log(err));
@@ -33,6 +43,15 @@ class Post extends Component {
 		this.getPost();
 	}
 	render() {
+		const del = () => {
+			if (+this.props.id === +this.state.authorId) {
+				return <input type='button' value='Delete' />;
+			} else {
+				return <div></div>;
+			}
+		};
+
+		const delBtn = del();
 		const { title, img, content, username, profilePic } = this.state;
 		return (
 			<div>
@@ -45,9 +64,12 @@ class Post extends Component {
 					<img alt='post' src={img} />
 					<span>{content}</span>
 				</div>
+				{delBtn}
 			</div>
 		);
 	}
 }
 
-export default Post;
+const mapStateToProps = (state) => state;
+
+export default connect(mapStateToProps)(Post);

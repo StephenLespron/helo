@@ -11,6 +11,8 @@ class Dashboard extends Component {
 			includeMyPosts: true,
 			posts: [],
 		};
+
+		this.deletePost = this.deletePost.bind(this);
 	}
 
 	getPosts() {
@@ -56,7 +58,11 @@ class Dashboard extends Component {
 		const posts = this.state.posts.map((elem) => {
 			return (
 				<div key={elem.id}>
-					<Link to={`post/${elem.id}`}>
+					<Link
+						to={{
+							pathname: `post/${elem.id}`,
+							state: { deletePost: this.deletePost },
+						}}>
 						<h3>{elem.title}</h3>
 					</Link>
 					<h4>{elem.username}</h4>
