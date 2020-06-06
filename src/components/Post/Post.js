@@ -66,7 +66,7 @@ class Post extends Component {
 		};
 
 		const delBtn = del();
-		const { title, img, content, username, profilePic } = this.state;
+		const { title, img, content, username } = this.state;
 		return (
 			<div>
 				<div>
