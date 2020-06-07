@@ -25,11 +25,7 @@ export function logout() {
 }
 
 export function getAccount() {
-	let account;
-	axios
-		.get('auth/me')
-		.then((res) => (account = res.data))
-		.catch((err) => console.log('Not logged in'));
+	const account = axios.get('auth/me');
 
 	return { type: GET_ACCOUNT, payload: account };
 }
@@ -43,7 +39,7 @@ export default function (state = initialState, action) {
 		case GET_ACCOUNT + '_PENDING':
 			return state;
 		case GET_ACCOUNT + '_FULFILLED':
-			return { ...state, ...action.payload, isLoggedIn: true };
+			return { ...state, ...action.payload.data, isLoggedIn: true };
 		case GET_ACCOUNT + '_REJECTED':
 			return { initialState };
 		default:

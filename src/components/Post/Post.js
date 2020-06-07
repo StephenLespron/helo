@@ -72,7 +72,7 @@ class Post extends Component {
 				<div>
 					<img
 						alt='profile pic'
-						src={`https://robohash.org/${this.props.username}.png`}
+						src={`https://robohash.org/${this.state.username}.png`}
 					/>
 					<h3>{username}</h3>
 				</div>

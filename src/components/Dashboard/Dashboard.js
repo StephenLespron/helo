@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 class Dashboard extends Component {
 	constructor() {
@@ -14,11 +15,9 @@ class Dashboard extends Component {
 		this.deletePost = this.deletePost.bind(this);
 	}
 
-	getPosts() {
+	getPosts(includeMyPosts, search) {
 		axios
-			.get(
-				`api/posts/?includeMyPosts=${this.state.includeMyPosts}&search=${this.state.search}`
-			)
+			.get(`api/posts/?includeMyPosts=${includeMyPosts}&search=${search}`)
 			.then((res) =>
 				this.setState({
 					posts: res.data,
@@ -27,30 +26,49 @@ class Dashboard extends Component {
 			.catch((err) => err.response.request.response);
 	}
 	componentDidMount() {
-		this.getPosts();
+		this.getPosts(true, ``);
+		console.log('remounted');
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		if (prevState.posts !== this.state.posts) {
+			// this.getPosts();
+			console.log(prevState.posts, this.state.posts);
+		}
 	}
 
 	changeIncludePosts() {
-		this.state.includeMyPosts
-			? this.setState({
-					includeMyPosts: false,
-			  })
-			: this.setState({ includeMyPosts: true });
-		this.getPosts();
+		if (this.state.includeMyPosts) {
+			this.setState({
+				includeMyPosts: false,
+				posts: this.state.posts.filter(
+					(elem) => elem.username === this.props.username
+				),
+			});
+		} else {
+			this.setState(
+				{
+					includeMyPosts: true,
+				},
+				() => {
+					this.getPosts(true, this.state.search);
+				}
+			);
+		}
 	}
 
 	changeSearch(ev) {
+		ev.preventDefault();
 		this.setState({
 			search: ev.target.value,
 		});
-		this.getPosts();
 	}
 
 	resetSearch() {
 		this.setState({
 			search: '',
+			includeMyPosts: true,
 		});
-		this.getPosts();
 	}
 
 	deletePost(id) {
@@ -81,11 +99,16 @@ class Dashboard extends Component {
 		});
 		return (
 			<div>
-				<form onSubmit={() => this.getPosts()}>
+				<form
+					onSubmit={(ev) => {
+						ev.preventDefault();
+						this.getPosts(this.state.includeMyPosts, this.state.search);
+					}}>
 					<input
 						type='text'
 						placeholder='Search posts'
 						name='search'
+						value={this.state.search}
 						onChange={(ev) => this.changeSearch(ev)}
 					/>
 					<button type='submit'>Search</button>
@@ -96,6 +119,7 @@ class Dashboard extends Component {
 					<input
 						type='checkbox'
 						checked={this.state.includeMyPosts}
+						value={this.state.includeMyPosts}
 						onChange={() => this.changeIncludePosts()}
 					/>
 				</div>
@@ -105,4 +129,6 @@ class Dashboard extends Component {
 	}
 }
 
-export default Dashboard;
+const mapStateToProps = (state) => state;
+
+export default connect(mapStateToProps)(Dashboard);
