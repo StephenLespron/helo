@@ -106,7 +106,7 @@ module.exports = {
 			{ postId } = req.params;
 
 		db.delete_post([+postId])
-			.then(() => console.log(postId, +postId))
+			.then(() => res.sendStatus(200))
 			.catch((err) => console.log(err, postId, +postId));
 	},
 };
