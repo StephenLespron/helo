@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import logo from './helo_logo.png';
 import { login } from '../../ducks/reducer';
 import './Auth.css';
 
