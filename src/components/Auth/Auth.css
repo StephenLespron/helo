@@ -1,0 +1,94 @@
+.Auth {
+	min-height: 100vh;
+	width: 100%;
+	background-image: linear-gradient(
+		to right,
+		#ff70a6,
+		#ff9770,
+		#ffd670,
+		#e9ff70
+	);
+}
+
+#formBox {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	backface-visibility: hidden;
+	max-height: 375px;
+	min-height: 50%;
+	min-width: 500px;
+	width: 30%;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: 15px;
+	border: 0 none;
+	box-shadow: 0px 10px 12px 0px rgba(0, 0, 0, 0.63);
+	font-size: 80px;
+	font-weight: bold;
+	padding: 20px 0;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+}
+
+form div {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	color: white;
+	font-size: 16px;
+	font-weight: 100;
+	width: 45%;
+}
+img {
+	object-fit: cover;
+	width: 23%;
+	height: 100%;
+	max-height: 300px;
+}
+
+#helo {
+	color: white;
+	margin: 3% 0 5%;
+}
+
+#authBtnBox {
+	display: flex;
+	justify-content: space-around;
+	margin-top: 3%;
+}
+
+.input {
+	display: flex;
+	align-items: center;
+	border: none;
+	width: 150px;
+	margin: 5px 0;
+	vertical-align: middle;
+	border-radius: 2px;
+}
+
+.authBtn {
+	height: 25px;
+	width: 50px;
+	font-size: 10px;
+	font-weight: 100;
+	color: white;
+	background-color: rgb(109, 109, 109);
+	border: none;
+	outline: none;
+	box-shadow: inset 1px 1px 20px 2px black;
+	border-radius: 2px;
+}
+
+.authBtn:active {
+	transform: translateY(2px);
+}

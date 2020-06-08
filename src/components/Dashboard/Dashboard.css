@@ -1,0 +1,136 @@
+.Dash {
+	margin-left: 125px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	min-height: 100vh;
+	background-color: whitesmoke;
+}
+
+#searchBox,
+#searchContainer {
+	display: flex;
+	padding: 10px;
+	background-color: white;
+}
+#searchContainer {
+	margin-top: 20px;
+	border: 1px solid black;
+	justify-content: space-between;
+	align-items: center;
+	width: 70%;
+	border-radius: 3px;
+	border: 0 none;
+	box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.246);
+}
+
+#searchBox {
+	width: 100%;
+	justify-content: flex-start;
+}
+
+input {
+	width: 50%;
+	height: 30px;
+}
+
+#checkBox {
+	display: flex;
+	align-items: center;
+	width: 10%;
+}
+
+#checkBox input {
+	width: 10px;
+}
+
+#searchBtn {
+	color: rgba(255, 255, 255, 0);
+	background-color: #ff9770; /*make the button transparent */
+	background-repeat: no-repeat; /* make the background image appear only once */
+	background-position: 0px 0px; /* equivalent to 'top left' */
+	background-size: 30px 30px;
+	border: none; /* assuming we don't want any borders */
+	cursor: pointer; /* make the cursor like hovering over an <a> element */
+	object-fit: cover;
+	height: 30px; /* make this the size of your image */
+	width: 30px;
+	vertical-align: middle; /* align the text vertically centered */
+	background-image: url(./search_logo.png);
+	outline: none;
+}
+
+#resetBtn {
+	height: 30px;
+	width: 50px;
+	font-size: 12px;
+	font-weight: 100;
+	color: white;
+	background-color: rgb(109, 109, 109);
+	border: none;
+	outline: none;
+	box-shadow: inset 1px 1px 20px 2px black;
+	border-radius: 2px;
+}
+
+#resetBtn:active,
+#searchBtn:active {
+	transform: translateY(2px);
+}
+
+#checkBox input {
+	height: 15px;
+	width: 15px;
+}
+
+#postsBox {
+	margin-top: 10px;
+	width: 70%;
+	padding: 20px 15px;
+	background-color: white;
+	border-radius: 3px;
+	border: 0 none;
+	box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.246);
+}
+
+.postBox {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin: 10px 0;
+	height: 100px;
+	width: 100%;
+	padding: 15px;
+	border-radius: 3px;
+	border: 0 none;
+	box-shadow: 0px 1px 5px 1px rgba(0, 0, 0, 0.246);
+}
+
+.postBox > div {
+	display: flex;
+	align-items: flex-end;
+	justify-content: flex-end;
+	height: 100%;
+	font-size: 22px;
+}
+
+.postBox > div > img {
+	border-radius: 50%;
+	background-color: white;
+	height: 68px;
+	width: 68px;
+	box-shadow: 0 0 5px 2px lightgray;
+}
+
+.postBox > div > h4 {
+	margin-right: 10px;
+}
+
+#postTitle {
+	color: black;
+	text-decoration: none;
+	font-size: 28px;
+	text-transform: capitalize;
+	/* font-weight: bold; */
+}

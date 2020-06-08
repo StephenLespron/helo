@@ -21,23 +21,31 @@ class Nav extends Component {
 
 	render() {
 		return (
-			<div id='Nav'>
+			<div>
 				{this.props.isLoggedIn ? (
-					<div>
-						<img
-							alt='profile pic'
-							src={`https://robohash.org/${this.props.username}.png`}
-						/>
-						<h3>{this.props.username}</h3>
-						<Link to='/dashboard'>
-							<button>Home</button>
-						</Link>
-						<Link to='/new'>
-							<button>New Post</button>
-						</Link>
-						<Link to='/'>
-							<button onClick={() => this.logout()}>Logout</button>
-						</Link>
+					<div id='Nav'>
+						<div id='topNavBox'>
+							<img
+								alt='profile pic'
+								src={`https://robohash.org/${this.props.username}.png`}
+							/>
+							<h3>{this.props.username}</h3>
+							<Link to='/dashboard'>
+								<input type='button' className='homeBtn' />
+							</Link>
+							<Link to='/new'>
+								<input type='button' className='newPostBtn' />
+							</Link>
+						</div>
+						<div>
+							<Link to='/'>
+								<input
+									type='button'
+									className='logoutBtn'
+									onClick={() => this.logout()}
+								/>
+							</Link>
+						</div>
 					</div>
 				) : (
 					<div></div>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import './Dashboard.css';
 
 class Dashboard extends Component {
 	constructor() {
@@ -81,49 +82,59 @@ class Dashboard extends Component {
 	render() {
 		const posts = this.state.posts.map((elem) => {
 			return (
-				<div key={elem.id}>
+				<div key={elem.id} className='postBox'>
 					<Link
 						to={{
 							pathname: `post/${elem.id}`,
 							state: { deletePost: this.deletePost },
-						}}>
+						}}
+						id='postTitle'>
 						<h3>{elem.title}</h3>
 					</Link>
-					<h4>{elem.username}</h4>
-					<img
-						alt='profile pic'
-						src={`https://robohash.org/${elem.username}.png`}
-					/>
+					<div>
+						<h4>by {elem.username}</h4>
+
+						<img
+							alt='profile pic'
+							src={`https://robohash.org/${elem.username}.png`}
+						/>
+					</div>
 				</div>
 			);
 		});
 		return (
-			<div>
-				<form
-					onSubmit={(ev) => {
-						ev.preventDefault();
-						this.getPosts(this.state.includeMyPosts, this.state.search);
-					}}>
-					<input
-						type='text'
-						placeholder='Search posts'
-						name='search'
-						value={this.state.search}
-						onChange={(ev) => this.changeSearch(ev)}
-					/>
-					<button type='submit'>Search</button>
-					<button onClick={() => this.resetSearch()}>Reset</button>
-				</form>
-				<div>
-					My Posts
-					<input
-						type='checkbox'
-						checked={this.state.includeMyPosts}
-						value={this.state.includeMyPosts}
-						onChange={() => this.changeIncludePosts()}
-					/>
+			<div className='Dash'>
+				<div id='searchContainer'>
+					<form
+						onSubmit={(ev) => {
+							ev.preventDefault();
+							this.getPosts(this.state.includeMyPosts, this.state.search);
+						}}>
+						<div id='searchBox'>
+							<input
+								type='text'
+								placeholder='Search by Title'
+								name='search'
+								value={this.state.search}
+								onChange={(ev) => this.changeSearch(ev)}
+							/>
+							<input type='submit' id='searchBtn' />
+							<button onClick={() => this.resetSearch()} id='resetBtn'>
+								Reset
+							</button>
+						</div>
+					</form>
+					<div id='checkBox'>
+						My Posts
+						<input
+							type='checkbox'
+							checked={this.state.includeMyPosts}
+							value={this.state.includeMyPosts}
+							onChange={() => this.changeIncludePosts()}
+						/>
+					</div>
 				</div>
-				{posts}
+				<div id='postsBox'>{posts}</div>
 			</div>
 		);
 	}
