@@ -26,7 +26,10 @@ class Auth extends Component {
 		} else {
 			axios
 				.post('auth/register', { username, password })
-				.then(() => this.props.login(username, password))
+				.then(() => {
+					this.props.login(username, password);
+					this.props.history.push('/dashboard');
+				})
 				.catch((err) => alert('Unable to register'));
 		}
 	};

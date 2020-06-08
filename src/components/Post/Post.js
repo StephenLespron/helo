@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import './Post.css';
 
 class Post extends Component {
 	constructor() {
@@ -50,6 +51,7 @@ class Post extends Component {
 			if (+this.state.sessionId === +this.state.authorId) {
 				return (
 					<input
+						className='deleteBtn'
 						type='button'
 						value='Delete'
 						onClick={() => {
@@ -68,20 +70,25 @@ class Post extends Component {
 		const delBtn = del();
 		const { title, img, content, username } = this.state;
 		return (
-			<div>
-				<div>
-					<img
-						alt='profile pic'
-						src={`https://robohash.org/${this.state.username}.png`}
-					/>
-					<h3>{username}</h3>
+			<div className='Post'>
+				<div className='postPageBox'>
+					<div id='topicBox'>
+						<h4>{title}</h4>
+						<div>
+							<h3>{username}</h3>
+							<img
+								id='profilePic'
+								alt='profile pic'
+								src={`https://robohash.org/${this.state.username}.png`}
+							/>
+						</div>
+					</div>
+					<div className='contentBox'>
+						<img id='postImg' alt='post' src={img} />
+						<span>{content}</span>
+					</div>
+					{delBtn}
 				</div>
-				<div>
-					<h4>{title}</h4>
-					<img alt='post' src={img} />
-					<span>{content}</span>
-				</div>
-				{delBtn}
 			</div>
 		);
 	}

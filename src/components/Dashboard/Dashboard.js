@@ -43,7 +43,7 @@ class Dashboard extends Component {
 			this.setState({
 				includeMyPosts: false,
 				posts: this.state.posts.filter(
-					(elem) => elem.username === this.props.username
+					(elem) => elem.username !== this.props.username
 				),
 			});
 		} else {
@@ -89,7 +89,7 @@ class Dashboard extends Component {
 							state: { deletePost: this.deletePost },
 						}}
 						id='postTitle'>
-						<h3>{elem.title}</h3>
+						<h3>{!elem.title ? 'Untitled' : elem.title}</h3>
 					</Link>
 					<div>
 						<h4>by {elem.username}</h4>

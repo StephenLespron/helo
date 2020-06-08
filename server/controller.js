@@ -66,11 +66,11 @@ module.exports = {
 		const criteria = `%${search}%`;
 
 		if (includeMyPosts) {
-			db.get_posts([0, criteria])
+			db.get_posts([0, criteria.toLowerCase()])
 				.then((posts) => res.status(200).send(posts))
 				.catch((err) => res.status(500).send(console.log(err)));
 		} else {
-			db.get_posts([accountId, criteria])
+			db.get_posts([accountId, criteria.toLowerCase()])
 				.then((posts) => res.status(200).send(posts))
 				.catch((err) => res.status(500).send(console.log(err)));
 		}

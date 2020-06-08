@@ -1,7 +1,7 @@
 insert into account
-(username, password, profile_pic)
+(username, password)
 values
-($1, $2, $3);
+($1, $2);
 
 select * from account
 where username = $1;

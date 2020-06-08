@@ -1,0 +1,96 @@
+.Post {
+	margin-left: 125px;
+	width: 100%;
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: whitesmoke;
+}
+
+.postPageBox {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 70%;
+	height: 50%;
+	background-color: white;
+	border-radius: 3px;
+	border: 0 none;
+	box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.246);
+}
+
+#topicBox,
+#topicBox > div {
+	display: flex;
+}
+
+#topicBox {
+	padding: 15px;
+	min-height: 20%;
+	color: #ff9770;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	font-size: 50px;
+	text-transform: capitalize;
+}
+
+#topicBox > div {
+	color: black;
+	justify-content: flex-end;
+	align-items: flex-end;
+	text-transform: none;
+	font-size: 25px;
+}
+
+#profilePic {
+	border-radius: 50%;
+	background-color: white;
+	height: 68px;
+	width: 68px;
+	box-shadow: 0 0 5px 2px lightgray;
+}
+
+.contentBox {
+	padding: 15px;
+	min-height: 80%;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#postImg,
+.contentBox > span {
+	min-height: 100%;
+	width: 50%;
+}
+
+.contentBox > span {
+	padding: 10px;
+	text-align: start;
+}
+
+#postImg {
+	object-fit: contain;
+}
+
+.deleteBtn {
+	margin-top: 10px;
+	align-self: flex-end;
+	min-height: 30px;
+	width: 100px;
+	font-size: 12px;
+	font-weight: 100;
+	color: white;
+	background-color: rgb(65, 65, 65);
+	border: none;
+	outline: none;
+	box-shadow: inset 1px 1px 20px 2px black;
+	border-radius: 2px;
+}
+
+.deleteBtn:active {
+	transform: translateY(2px);
+}
