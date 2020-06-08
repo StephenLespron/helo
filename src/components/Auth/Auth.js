@@ -19,17 +19,13 @@ class Auth extends Component {
 	};
 	register = () => {
 		const { username, password } = this.state;
-		if (!username || !password) {
-			alert('Please provide a username and password');
-		} else {
-			axios
-				.post('auth/register', { username, password })
-				.then(() => {
-					this.props.login(username, password);
-					this.props.history.push('/dashboard');
-				})
-				.catch((err) => alert('Unable to register'));
-		}
+		axios
+			.post('auth/register', { username, password })
+			.then(() => {
+				this.props.login(username, password);
+				this.props.history.push('/dashboard');
+			})
+			.catch((err) => alert(err.response.data));
 	};
 
 	login = (ev) => {
@@ -42,7 +38,7 @@ class Auth extends Component {
 				this.props.login(username, profile_pic);
 				this.props.history.push('/dashboard');
 			})
-			.catch((err) => alert('Login unsuccessful'));
+			.catch((err) => alert(err.response.data));
 	};
 
 	render() {

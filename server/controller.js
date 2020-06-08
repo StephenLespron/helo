@@ -5,6 +5,10 @@ module.exports = {
 		const db = req.app.get('db'),
 			{ username, password } = req.body;
 
+		if (!username || !password) {
+			return res.status(418).send('Please provide a username and password');
+		}
+
 		const existingAccount = await db.check_account(username);
 
 		//checking if user already exists
