@@ -6,6 +6,8 @@ const express = require('express'),
 	app = express(),
 	{ SERVER_PORT, CONNECTION_STRING, SESSION_SECRET } = process.env;
 
+app.use(express.static(`${__dirname}/../build`));
+
 app.use(express.json());
 
 app.use(

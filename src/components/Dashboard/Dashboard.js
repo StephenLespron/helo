@@ -28,14 +28,6 @@ class Dashboard extends Component {
 	}
 	componentDidMount() {
 		this.getPosts(true, ``);
-		console.log('remounted');
-	}
-
-	componentDidUpdate(prevProps, prevState) {
-		if (prevState.posts !== this.state.posts) {
-			// this.getPosts();
-			console.log(prevState.posts, this.state.posts);
-		}
 	}
 
 	changeIncludePosts() {

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import './Nav.css';
 
 class Nav extends Component {
-	componentDidMount() {
+	componentDidUpdate() {
 		this.props.getAccount();
 	}
 
